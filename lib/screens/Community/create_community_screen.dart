@@ -1,28 +1,24 @@
+import 'dart:ffi';
 import 'dart:io';
-import 'dart:typed_data';
+import 'dart:ui';
 
-import 'package:commect/firebase/firebase_functions.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:commect/constants/constants.dart';
+import 'package:commect/provider/selectedtags.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:provider/provider.dart';
 
-import '../../constants/constants.dart';
-import '../Community/create_community_screen.dart';
+import '../../firebase/firebase_functions.dart';
 
-class FinishSignUp extends StatefulWidget {
-  // final Uint8List profileImage;
-  const FinishSignUp({
-    Key? key,
-  }) : super(key: key);
+class CreateCommunityScreen extends StatefulWidget {
+  const CreateCommunityScreen({super.key});
 
   @override
-  State<FinishSignUp> createState() => _FinishSignUpState();
+  State<CreateCommunityScreen> createState() => _CreateCommunityScreenState();
 }
 
-class _FinishSignUpState extends State<FinishSignUp>
-    with TickerProviderStateMixin {
+class _CreateCommunityScreenState extends State<CreateCommunityScreen> {
   late AnimationController controller;
   late Animation<double> animation;
   bool privacyPolicy = true;
@@ -44,6 +40,7 @@ class _FinishSignUpState extends State<FinishSignUp>
   XFile? _imageFileBanner;
   XFile? _imageFileProfile;
   bool hideTopBar = false;
+  List<String> tagged = [];
   int indexes = -1;
 
   var profileImage;
@@ -69,21 +66,11 @@ class _FinishSignUpState extends State<FinishSignUp>
         });
       }
     });
-    controller = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 20),
-    );
-    animation = CurvedAnimation(
-      parent: controller,
-      curve: Curves.linear,
-    );
-
-    controller.repeat();
   }
 
   @override
   void dispose() {
-    controller.dispose();
+    // controller.dispose();
 
     super.dispose();
   }
@@ -97,6 +84,7 @@ class _FinishSignUpState extends State<FinishSignUp>
         child: Form(
           key: _formKeyForFB,
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               Align(
                 alignment: Alignment.topRight,
@@ -104,6 +92,8 @@ class _FinishSignUpState extends State<FinishSignUp>
                   width: 80,
                   child: IconButton(
                     onPressed: () {
+                      print(
+                          "Sending nudes  ${context.read<Tags>().selectedTags}");
                       // Navigator.pushAndRemoveUntil(
                       //   context,
                       //   CupertinoPageRoute(
@@ -128,8 +118,10 @@ class _FinishSignUpState extends State<FinishSignUp>
                           setState(() {
                             sending = true;
                           });
-                          print("Sending nudes");
-                          addUser(
+                          // print(
+                          //     "Sending nudes  ${context.read<Tags>().selectedTags}");
+
+                          createCommunity(
                               bannerImage: File(_imageFileBanner!.path),
                               profileImage: File(_imageFileProfile!.path),
                               bio: bioController.text.trim(),
@@ -242,7 +234,7 @@ class _FinishSignUpState extends State<FinishSignUp>
                           decoration: InputDecoration(
                             filled: true,
                             fillColor: Theme.of(context).cardColor,
-                            hintText: "Username",
+                            hintText: "Community Username",
                             // border: InputBorder.none,
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
@@ -268,7 +260,7 @@ class _FinishSignUpState extends State<FinishSignUp>
                           decoration: InputDecoration(
                             filled: true,
                             fillColor: Theme.of(context).cardColor,
-                            hintText: "Name",
+                            hintText: "Community Name",
                             // border: InputBorder.none,
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
@@ -295,7 +287,7 @@ class _FinishSignUpState extends State<FinishSignUp>
                           decoration: InputDecoration(
                             filled: true,
                             fillColor: Theme.of(context).cardColor,
-                            hintText: "Bio",
+                            hintText: "About",
                             // border: InputBorder.none,
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
@@ -306,42 +298,43 @@ class _FinishSignUpState extends State<FinishSignUp>
                           ),
                         ),
                       ),
-                      Row(
-                        children: [
-                          Checkbox(
-                              activeColor: Colors.blue,
-                              value: privacyPolicy,
-                              onChanged: (value) {
-                                setState(() {
-                                  privacyPolicy = value!;
-                                });
-                              }),
-                          Row(
-                            children: [
-                              Text('I accept the, '),
-                              GestureDetector(
-                                onTap: () {
-                                  // Navigator.push(
-                                  //     context,
-                                  //     CupertinoPageRoute(
-                                  //       builder: (context) => PolicyScreend(),
-                                  //     ));
-                                },
-                                child: Text(
-                                  'Privacy and Policy',
-                                  style: TextStyle(color: Colors.blue),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                      // Row(
+                      //   children: [
+                      //     Checkbox(
+                      //         activeColor: Colors.blue,
+                      //         value: privacyPolicy,
+                      //         onChanged: (value) {
+                      //           setState(() {
+                      //             privacyPolicy = value!;
+                      //           });
+                      //         }),
+                      //     Row(
+                      //       children: [
+                      //         Text('I accept the, '),
+                      //         GestureDetector(
+                      //           onTap: () {
+                      //             // Navigator.push(
+                      //             //     context,
+                      //             //     CupertinoPageRoute(
+                      //             //       builder: (context) => PolicyScreend(),
+                      //             //     ));
+                      //           },
+                      //           child: Text(
+                      //             'Privacy and Policy',
+                      //             style: TextStyle(color: Colors.blue),
+                      //           ),
+                      //         ),
+                      //       ],
+                      //     ),
+                      //   ],
+                      // ),
                       SizedBox(
                         height: 12,
                       ),
+
                       Container(
                         width: MediaQuery.of(context).size.width - 24,
-                        height: 400,
+                        // height: 400,
                         // color: Colors.blue,
                         child: Wrap(
                             children: tags.map((e) {
@@ -353,6 +346,9 @@ class _FinishSignUpState extends State<FinishSignUp>
                           );
                         }).toList()),
                       ),
+                      SizedBox(
+                        height: 20,
+                      ),
                     ],
                   )
                 ],
@@ -361,6 +357,85 @@ class _FinishSignUpState extends State<FinishSignUp>
           ),
         ),
       )),
+    );
+  }
+}
+
+class taggedCard extends StatefulWidget {
+  const taggedCard({
+    Key? key,
+    required this.tagName,
+    required this.index,
+  }) : super(key: key);
+
+  final String tagName;
+  final int index;
+
+  @override
+  State<taggedCard> createState() => _taggedCardState();
+}
+
+class _taggedCardState extends State<taggedCard> {
+  bool selected = false;
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: GestureDetector(
+        onTap: () {
+          // setState(() {
+          //   tagged.add(tagName);
+          // });
+          if (selected) {
+            setState(() {
+              selected = false;
+            });
+            print("Removing to list at index ${widget.index}");
+            context.read<Tags>().deleteTagNameUser(
+                index: widget.index, tagName: widget.tagName);
+          } else {
+            setState(() {
+              selected = true;
+            });
+            print("adding to list at index ${widget.index}");
+            context
+                .read<Tags>()
+                .addTagUser(index: widget.index, tagName: widget.tagName);
+          }
+        },
+        child: Container(
+          height: 40,
+          // width: 50,
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.purple),
+            borderRadius: BorderRadius.circular(12),
+            color: selected ? Colors.purple : null,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(widget.tagName),
+                // SizedBox(
+                //   width: 5,
+                // ),
+                // GestureDetector(
+                //   onTap: () {
+                //     // addedPeople.removeAt(index);
+                //     print("tapped on cancel");
+                //     setState(() {});
+                //   },
+                //   child: Icon(
+                //     Icons.cancel,
+                //     size: 18,
+                //   ),
+                // )
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

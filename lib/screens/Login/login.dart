@@ -2,6 +2,7 @@
 
 import 'dart:async';
 
+import 'package:commect/screens/Login/create_profile.dart';
 import 'package:commect/screens/Profile/profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -41,7 +42,7 @@ class _LoginPageState extends State<LoginPage> {
   bool value = false;
 
   late Timer _timer;
-  int _start = 60;
+  int _start = 90;
 
   void startTimer() {
     const oneSec = Duration(seconds: 1);
@@ -285,7 +286,7 @@ class _LoginPageState extends State<LoginPage> {
   void verifyNumber() {
     auth.verifyPhoneNumber(
       phoneNumber: "+91${phonecontroller.text.trim()}",
-      timeout: const Duration(seconds: 60),
+      timeout: const Duration(seconds: 90),
       verificationCompleted: (PhoneAuthCredential credential) async {
         await auth.signInWithCredential(credential).then((value) => {
               print("You are logged in successfully"),
@@ -320,7 +321,7 @@ class _LoginPageState extends State<LoginPage> {
       Navigator.pushReplacement(
           context,
           CupertinoPageRoute(
-            builder: (context) => BottomNavBar(),
+            builder: (context) => FinishSignUp(),
           ));
     });
   }

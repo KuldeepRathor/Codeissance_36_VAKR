@@ -1,15 +1,25 @@
 import 'package:commect/btm_navbar.dart';
+import 'package:commect/provider/selectedtags.dart';
 import 'package:commect/screens/Login/create_profile.dart';
 import 'package:commect/screens/Login/login.dart';
 import 'package:commect/screens/Onboarding%20Screen/onboardingscreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) {
+    runApp(MultiProvider(providers: [
+      ChangeNotifierProvider(
+        create: (_) => Tags(),
+      ),
+    ], child: const MyApp()));
+  });
 }
 
 class MyApp extends StatelessWidget {
@@ -38,7 +48,7 @@ class MyApp extends StatelessWidget {
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 print(FirebaseAuth.instance.currentUser!.uid);
-                return const FinishSignUp();
+                return const BottomNavBar();
               } else {
                 return const OnboardingScreen();
               }
