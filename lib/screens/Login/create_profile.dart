@@ -1,8 +1,11 @@
+import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:commect/firebase/firebase_functions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class FinishSignUp extends StatefulWidget {
@@ -34,6 +37,9 @@ class _FinishSignUpState extends State<FinishSignUp>
   bool sending = false;
 
   ScrollController _scrollController = ScrollController();
+  final ImagePicker _picker = ImagePicker();
+  XFile? _imageFileBanner;
+  XFile? _imageFileProfile;
   bool hideTopBar = false;
 
   var profileImage;
@@ -101,29 +107,38 @@ class _FinishSignUpState extends State<FinishSignUp>
                       //   ),
                       //   (route) => false,
                       // );
+                      if (_imageFileBanner == null ||
+                          _imageFileProfile == null) {
+                        SnackBar snackBar = const SnackBar(
+                          content: Text("Select Images"),
+                          backgroundColor: Colors.red,
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      }
                       if (_formKeyForFB.currentState!.validate()) {
                         // TODO submit
                         if (bioController.text.isEmpty) {
                           bioController.text = "";
                         }
-                        if (privacyPolicy == false) {}
-                        setState(() {
-                          sending = true;
-                        });
-
-                        // addUser(
-                        //     usernameController.text.trim(),
-                        //     bioController.text.trim(),
-                        //     nameController.text.trim(),
-                        //     privacy,
-                        //     widget.profileImage,
-                        //     context);
+                        if (privacyPolicy == true) {
+                          setState(() {
+                            sending = true;
+                          });
+                          print("Sending nudes");
+                          addUser(
+                              bannerImage: File(_imageFileBanner!.path),
+                              profileImage: File(_imageFileProfile!.path),
+                              bio: bioController.text.trim(),
+                              context: context,
+                              name: nameController.text.trim(),
+                              username: usernameController.text.trim());
+                        }
                       }
-                      if (mounted) {
-                        setState(() {
-                          sending = false;
-                        });
-                      }
+                      // if (mounted) {
+                      //   setState(() {
+                      //     sending = false;
+                      //   });
+                      // }
                     },
                     icon: Visibility(
                       visible: privacyPolicy,
@@ -140,7 +155,13 @@ class _FinishSignUpState extends State<FinishSignUp>
                   ),
                 ),
               ),
-              Visibility(visible: sending, child: LinearProgressIndicator()),
+              // Visibility(
+              //   visible: sending,
+              //   child: const LinearProgressIndicator(),
+              // ),
+              Visibility(
+                  visible: sending,
+                  child: LinearProgressIndicator(minHeight: 8)),
               // Align(
               //   alignment: Alignment.topCenter,
               //   child: ProfileWithSpinners(
@@ -155,15 +176,25 @@ class _FinishSignUpState extends State<FinishSignUp>
                     duration: const Duration(milliseconds: 500),
                     height: hideTopBar ? 0 : 200,
                     width: double.infinity,
-                    color: Colors.red,
+                    color: Colors.purple,
                     child: GestureDetector(
-                        onTap: () {
+                        onTap: () async {
                           print("Tapped");
+                          final XFile? pickedFile = await _picker.pickImage(
+                              source: ImageSource.gallery);
+                          setState(() {
+                            _imageFileBanner = pickedFile;
+                          });
                         },
-                        child: Image.network(
-                          "https://image.shutterstock.com/shutterstock/photos/1041117601/display_1500/stock-vector-connect-logo-design-template-s-connect-icon-design-modern-network-logo-design-1041117601.jpg",
-                          fit: BoxFit.fitWidth,
-                        )),
+                        child: _imageFileBanner == null
+                            ? Image.network(
+                                "https://image.shutterstock.com/shutterstock/photos/1041117601/display_1500/stock-vector-connect-logo-design-template-s-connect-icon-design-modern-network-logo-design-1041117601.jpg",
+                                fit: BoxFit.fitWidth,
+                              )
+                            : Image.file(
+                                File(_imageFileBanner!.path),
+                                fit: BoxFit.fitWidth,
+                              )),
                   ),
                   Column(
                     children: [
@@ -173,16 +204,26 @@ class _FinishSignUpState extends State<FinishSignUp>
                       ),
                       Align(
                         alignment: Alignment.topLeft,
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(12, 8, 8, 8),
-                          child: CircleAvatar(
-                              backgroundColor: Colors.blue,
-                              radius: 40,
-                              backgroundImage: profileImage == null
-                                  ? Image.network(
-                                      "https://image.shutterstock.com/shutterstock/photos/1041117601/display_1500/stock-vector-connect-logo-design-template-s-connect-icon-design-modern-network-logo-design-1041117601.jpg",
-                                    ).image
-                                  : Image.memory(profileImage!).image),
+                        child: GestureDetector(
+                          onTap: () async {
+                            final XFile? pickedFile = await _picker.pickImage(
+                                source: ImageSource.gallery);
+                            setState(() {
+                              _imageFileProfile = pickedFile;
+                            });
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(12, 8, 8, 8),
+                            child: CircleAvatar(
+                                backgroundColor: Colors.blue,
+                                radius: 40,
+                                backgroundImage: _imageFileProfile == null
+                                    ? Image.network(
+                                        "https://image.shutterstock.com/shutterstock/photos/1041117601/display_1500/stock-vector-connect-logo-design-template-s-connect-icon-design-modern-network-logo-design-1041117601.jpg",
+                                      ).image
+                                    : Image.file(File(_imageFileProfile!.path))
+                                        .image),
+                          ),
                         ),
                       ),
                       SizedBox(
