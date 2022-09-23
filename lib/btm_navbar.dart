@@ -1,4 +1,5 @@
 import 'package:commect/screens/ChatScreen/chat_screen.dart';
+import 'package:commect/screens/EventsScreen/events_screen.dart';
 import 'package:flutter/material.dart';
 
 class BottomNavBar extends StatefulWidget {
@@ -16,11 +17,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
         child: Text("Home Page"),
       ),
     ),
-    Container(
-      child: Center(
-        child: Text("Events Page"),
-      ),
-    ),
+    EventsScreen(),
     ChatScreen(),
     Container(
       child: Center(
@@ -37,7 +34,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
           showSelectedLabels: false,
           type: BottomNavigationBarType.fixed,
           showUnselectedLabels: false,
-          selectedItemColor: const Color(0xff6200ee),
+          selectedItemColor: Color(0xff4700a2),
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(
