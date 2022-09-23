@@ -10,9 +10,6 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../btm_navbar.dart';
 
-
-
-
 class LoginPage extends StatefulWidget {
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -50,7 +47,7 @@ class _LoginPageState extends State<LoginPage> {
     const oneSec = Duration(seconds: 1);
     _timer = Timer.periodic(
       oneSec,
-          (Timer timer) {
+      (Timer timer) {
         if (_start == 0) {
           setState(() {
             timer.cancel();
@@ -162,7 +159,7 @@ class _LoginPageState extends State<LoginPage> {
                         Checkbox(
                           checkColor: Colors.white,
                           fillColor:
-                          MaterialStateProperty.resolveWith(getColor),
+                              MaterialStateProperty.resolveWith(getColor),
                           value: value,
                           onChanged: (bool? newvalue) {
                             setState(() {
@@ -278,12 +275,10 @@ class _LoginPageState extends State<LoginPage> {
             ],
           ),
         ),
-        floatingActionButton:  FloatingActionButton(onPressed: () {  },
-
-
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {},
         ),
       ),
-
     );
   }
 
@@ -293,13 +288,13 @@ class _LoginPageState extends State<LoginPage> {
       timeout: const Duration(seconds: 60),
       verificationCompleted: (PhoneAuthCredential credential) async {
         await auth.signInWithCredential(credential).then((value) => {
-          print("You are logged in successfully"),
-          Navigator.pushReplacement(
-              context,
-              CupertinoPageRoute(
-                builder: (context) => ProfilePage(),
-              ))
-        });
+              print("You are logged in successfully"),
+              Navigator.pushReplacement(
+                  context,
+                  CupertinoPageRoute(
+                    builder: (context) => ProfilePage(),
+                  ))
+            });
       },
       verificationFailed: (FirebaseAuthException exception) {
         print("The error is ${exception.message}");

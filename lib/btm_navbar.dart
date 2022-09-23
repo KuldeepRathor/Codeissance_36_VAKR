@@ -1,4 +1,5 @@
 import 'package:commect/screens/ChatScreen/chat_screen.dart';
+import 'package:commect/screens/EventsScreen/events_screen.dart';
 import 'package:commect/screens/Homepage/homepage.dart';
 import 'package:commect/screens/Profile/profile.dart';
 import 'package:flutter/material.dart';
@@ -14,11 +15,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   int _selectedIndex = 0;
   static List<Widget> _widgetOptions = <Widget>[
     Homepage(),
-    Container(
-      child: Center(
-        child: Text("Events Page"),
-      ),
-    ),
+    EventsScreen(),
     ChatScreen(),
     ProfilePage(),
   ];
