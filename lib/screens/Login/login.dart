@@ -264,7 +264,7 @@ class _LoginPageState extends State<LoginPage> {
                           Navigator.pushReplacement(
                               context,
                               CupertinoPageRoute(
-                                builder: (context) => ProfilePage(),
+                                builder: (context) => BottomNavBar(),
                               ));
                         },
                         child: Text('homepage'),
