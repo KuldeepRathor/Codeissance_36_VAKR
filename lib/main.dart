@@ -33,18 +33,20 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
-        home: Scaffold(
-          body: StreamBuilder<User?>(
-            stream: FirebaseAuth.instance.authStateChanges(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                print(FirebaseAuth.instance.currentUser!.uid);
-                return const FinishSignUp();
-              } else {
-                return const OnboardingScreen();
-              }
-            },
-          ),
-        ));
+        // home: Scaffold(
+        //   body: StreamBuilder<User?>(
+        //     stream: FirebaseAuth.instance.authStateChanges(),
+        //     builder: (context, snapshot) {
+        //       if (snapshot.hasData) {
+        //         print(FirebaseAuth.instance.currentUser!.uid);
+        //         return const FinishSignUp();
+        //       } else {
+        //         return const OnboardingScreen();
+        //       }
+        //     },
+        //   ),
+        // ),
+      home: BottomNavBar(),
+    );
   }
 }

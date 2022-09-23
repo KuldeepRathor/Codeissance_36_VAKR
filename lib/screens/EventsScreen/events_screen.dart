@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'create_event.dart';
 import 'details.dart';
 
 class EventsScreen extends StatefulWidget {
@@ -22,6 +23,18 @@ class _EventsScreenState extends State<EventsScreen> {
             "Events 🎊",
             style: TextStyle(fontSize: 26),
           ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.purple,
+          child: Icon(Icons.add,color: CupertinoColors.white,),
+          onPressed: () {
+            Navigator.push(
+                context,
+                CupertinoPageRoute(
+                   builder: (context) => CreateEvent(),
+                 ));
+          },
+
         ),
         body: ListView.builder(
           physics: const BouncingScrollPhysics(),
