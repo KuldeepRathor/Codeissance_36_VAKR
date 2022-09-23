@@ -41,6 +41,7 @@ dependencies:
   firebase_auth: ^3.10.0
   lottie: ^1.4.3
   smooth_page_indicator: ^1.0.0+2
+  shimmer: ^2.0.0
 
 dev_dependencies:
   flutter_test:
