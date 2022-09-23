@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "447577823119",
+    "project_id": "commect-7631c",
+    "storage_bucket": "commect-7631c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:447577823119:android:eb46abc203aaad2fc29dfa",
+        "android_client_info": {
+          "package_name": "com.example.commect"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "447577823119-adtk2gh0l8l28istpj6dtlukm8n6k0ls.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCV4PV62Lud5lcXrXwpbxWBxQuI0ssVH30"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "447577823119-adtk2gh0l8l28istpj6dtlukm8n6k0ls.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
