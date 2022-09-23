@@ -1,7 +1,8 @@
 import 'package:commect/screens/ChatScreen/chat_screen.dart';
 import 'package:commect/screens/EventsScreen/events_screen.dart';
 import 'package:commect/screens/Homepage/homepage.dart';
-import 'package:commect/screens/Profile/profile.dart';
+import 'package:commect/screens/Login/create_profile.dart';
+import 'package:commect/screens/communitypage.dart';
 import 'package:flutter/material.dart';
 
 class BottomNavBar extends StatefulWidget {
@@ -14,10 +15,10 @@ class BottomNavBar extends StatefulWidget {
 class _BottomNavBarState extends State<BottomNavBar> {
   int _selectedIndex = 0;
   static List<Widget> _widgetOptions = <Widget>[
-    Homepage(),
+    Communities(),
     EventsScreen(),
     ChatScreen(),
-    ProfilePage(),
+    FinishSignUp(),
   ];
   @override
   Widget build(BuildContext context) {
