@@ -4,8 +4,6 @@ import 'package:lottie/lottie.dart';
 
 import '../../utils/constants.dart';
 
-
-
 class Onboarding1 extends StatefulWidget {
   const Onboarding1({Key? key}) : super(key: key);
 
@@ -54,7 +52,7 @@ class _Onboarding1State extends State<Onboarding1> {
                   child: Text(
                     body1,
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.black54, fontSize: 16),
+                    style: TextStyle(color: Colors.grey, fontSize: 16),
                   ),
                 )
               ],
@@ -65,4 +63,3 @@ class _Onboarding1State extends State<Onboarding1> {
     );
   }
 }
-

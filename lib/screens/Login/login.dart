@@ -74,29 +74,6 @@ class _LoginPageState extends State<LoginPage> {
     Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.black,
-          leading: Builder(
-            builder: (BuildContext context) {
-              return IconButton(
-                icon: const Icon(
-                  Icons.arrow_back_ios,
-                  color: Colors.white,
-                ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                tooltip: MaterialLocalizations.of(context).backButtonTooltip,
-              );
-            },
-          ),
-          centerTitle: true,
-          title: Text(
-            'Login',
-            style: TextStyle(
-                fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),
-          ),
-        ),
         body: Padding(
           padding: const EdgeInsets.all(18.0),
           child: Stack(
@@ -246,21 +223,6 @@ class _LoginPageState extends State<LoginPage> {
                     Center(
                       child: ElevatedButton(
                         onPressed: () {
-                          if (otpCodeVisible == false) {
-                            print("verify Number function is called");
-                            verifyNumber();
-                          } else {
-                            print("verify otp function is called");
-                            verifyCode();
-                          }
-                          // verifyNumber();
-                        },
-                        child: Text(otpCodeVisible ? "Login" : "Verify"),
-                      ),
-                    ),
-                    Center(
-                      child: ElevatedButton(
-                        onPressed: () {
                           Navigator.pushReplacement(
                               context,
                               CupertinoPageRoute(
@@ -277,7 +239,17 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            if (otpCodeVisible == false) {
+              print("verify Number function is called");
+              verifyNumber();
+            } else {
+              print("verify otp function is called");
+              verifyCode();
+            }
+            // verifyNumber();
+          },
+          child: Text(otpCodeVisible ? "Login" : "Verify"),
         ),
       ),
     );

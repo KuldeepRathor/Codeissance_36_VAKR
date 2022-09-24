@@ -1,4 +1,5 @@
 import 'package:commect/screens/ChatScreen/chat_screen.dart';
+import 'package:commect/screens/Community/create_community_screen.dart';
 import 'package:commect/screens/EventsScreen/events_screen.dart';
 import 'package:commect/screens/Homepage/homepage.dart';
 import 'package:commect/screens/Login/create_profile.dart';
@@ -18,7 +19,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
     Communities(),
     EventsScreen(),
     ChatScreen(),
-    FinishSignUp(),
+    CreateCommunityScreen(),
   ];
   @override
   Widget build(BuildContext context) {

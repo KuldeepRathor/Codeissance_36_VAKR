@@ -1,6 +1,4 @@
-import 'dart:ffi';
 import 'dart:io';
-import 'dart:ui';
 
 import 'package:commect/constants/constants.dart';
 import 'package:commect/provider/selectedtags.dart';
@@ -71,6 +69,7 @@ class _CreateCommunityScreenState extends State<CreateCommunityScreen> {
   @override
   void dispose() {
     // controller.dispose();
+    indexes = 0;
 
     super.dispose();
   }
